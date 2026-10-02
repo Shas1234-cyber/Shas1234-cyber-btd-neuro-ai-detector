@@ -1,7 +1,9 @@
-Flask==3.1.2
-gunicorn==23.0.0
+flask
+gunicorn
 tensorflow==2.10.0
 keras==2.10.0
-numpy==1.26.4
-h5py==3.15.1
-Pillow==11.3.0
+numpy==1.23.5
+opencv-python==4.8.1.78
+pillow==11.3.0
+click==8.3.0
+MarkupSafe==3.0.3
