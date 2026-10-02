@@ -1,271 +1,153 @@
-# 🧠 NeuroAI Detector - Brain Tumor Detection System
+🧠 NeuroAI Detector - Multi-Class Brain Tumor Detection & Analysis System
+AI-Powered Brain Tumor Classification using Deep Transfer Learning and Magnetic Resonance Imaging (MRI)
 
-**AI-Powered Brain Tumor Detection using Deep Learning and MRI Analysis**
+NeuroAI Detector is an end-to-end medical decision-support web application that classifies brain MRI scans into four distinct clinical categories with 92%+ validation accuracy. Powered by a fine-tuned VGG16 convolutional neural network (~21.14M parameters) and built with a Flask backend, this system delivers diagnostic confidence scores and class probability breakdowns in under 3 seconds.
 
-A cutting-edge web application that leverages artificial intelligence to detect brain tumors from MRI scans with **97% accuracy**. Built with Flask backend and interactive web interface, this system assists medical professionals in early diagnosis and treatment planning.
+✨ Features
+🚀 Core Capabilities
+4-Class Multi-Tumor Classification:
 
----
+Glioma
 
-## ✨ Features
+Meningioma
 
-### 🚀 Core Features
-- **AI-Powered Detection**: Deep Learning CNN model trained on thousands of MRI scans
-- **High Accuracy**: 97% accuracy rate on validated datasets
-- **Instant Results**: Get analysis results in less than 5 seconds
-- **User-Friendly Interface**: Intuitive web interface for easy image upload and analysis
-- **Medical-Grade Analysis**: Processes 8 million parameters for comprehensive evaluation
-- **Patient Information Tracking**: Store and display patient name and analysis details
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
+Pituitary Tumor
 
-### 🎨 UI/UX Features
-- **Modern Bootstrap 5 Design**: Clean, professional interface
-- **Animated Components**: Smooth transitions and floating shapes for visual appeal
-- **Real-time Results Display**: Comprehensive result visualization with confidence metrics
-- **Downloadable Reports**: Print-friendly result summaries for medical records
-- **Navigation Menu**: Quick access to home, features, analysis, and resources
-- **Social Media Integration**: Links to developer's professional profiles
+No Tumor (Healthy Brain Tissue)
 
-### 🔒 Security & Privacy
-- **Secure Processing**: Images processed securely without permanent storage
-- **Data Privacy**: Uploaded images are temporary and cleared after analysis
-- **Medical Compliance**: Designed with healthcare privacy in mind
+Transfer Learning Backbone: Custom top classifier integrated with fine-tuned VGG16 convolutional blocks (Blocks 4 & 5 unfrozen).
 
----
+Clinical Confidence Analysis: Provides individual softmax percentage probabilities across all four potential diagnoses.
 
-## 💻 System Requirements
+Instant Inference: Full image preprocessing, array transformations, and inference cycle execute in under 3 seconds.
 
-### Minimum Requirements
-- **Python**: 3.8 or higher
-- **RAM**: 4GB minimum (8GB recommended)
-- **Disk Space**: 2GB for model and dependencies
-- **GPU** (Optional): NVIDIA GPU with CUDA support for faster processing
+Patient Session Logging: Tracks patient identifier/name alongside system timestamps and formatted predictions.
 
-### Software
-- Windows 10/11, macOS, or Linux
-- pip (Python Package Manager)
-- Virtual Environment (recommended)
+🎨 UI & UX Design
+Bootstrap 5 Interface: Clean, responsive layout tailored for healthcare dashboards.
 
----
+Dynamic Probability Indicators: Color-coded diagnostic cards highlighting selected-class confidence.
 
-## 📦 Installation
+Scan Visualization: Side-by-side verification of uploaded scans alongside technical model diagnostics.
 
-### Step 1: Clone or Download the Repository
+Cross-Device Support: Optimized for desktop, tablet, and mobile browsers.
 
-```bash
-# Clone the repository
-git clone https://github.com/PrashantPKP/btd-neuro-ai-detector.git
-cd "btd-neuro-ai-detector"
-```
+🗂️ Dataset Details
+The underlying model is trained and benchmarked on the standardized Brain Tumor Classification (MRI) dataset hosted on Kaggle, integrating verified clinical scans from the SARTAJ and Figshare medical archives.
 
-### Step 2: Create Virtual Environment (Recommended)
+Primary Dataset: Brain Tumor Classification (MRI) on Kaggle
 
-```bash
-# On Windows
-python -m venv venv
-venv\Scripts\activate
+Direct Kaggle CLI:
 
-# On macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
-```
+Bash
+kaggle datasets download -d sartajbhuvaji/brain-tumor-classification-mri
+Dataset Volume: ~3,264+ MRI scans (Training: 2,870 | Testing: 394)
 
-### Step 3: Install Dependencies
+Extended Benchmark: Brain Tumor MRI Dataset (7,023 images)
 
-```bash
+Imaging Modalities: T1-weighted contrast-enhanced, T2-weighted, and FLAIR scans in Axial, Coronal, and Sagittal planes.
+
+Input Spatial Resolution: Standardized to 224 x 224 pixels with 3-channel RGB depth.
+
+Clinical Categories
+Class Label	Pathological Category	Clinical Significance
+glioma_tumor	Intra-axial Malignancy	Arises from glial cells; requires immediate grading and surgical assessment.
+meningioma_tumor	Extra-axial Neoplasm	Develops from the meninges layers surrounding the brain and spinal cord.
+pituitary_tumor	Sellar Region Mass	Endocrine adenomas impacting hormone regulation and optic chiasm.
+no_tumor	Negative Control	Normal MRI brain scans with no pathological mass or lesion detected.
+🔧 Technical Specifications
+Component	Technical Implementation
+Backbone Architecture	VGG16 (ImageNet weights, Blocks 4 & 5 fine-tuned)
+Classification Head	Flatten → Dense(256, ReLU) → Dropout(0.4) → Dense(4, Softmax)
+Total Parameters	21,140,548 (~21.14 Million parameters)
+Image Preprocessing	VGG16 Zero-centering (ImageNet Mean Subtraction, BGR array order)
+Backend Framework	Flask 3.x / Werkzeug WSGI
+Deep Learning Stack	TensorFlow 2.10.0 / Keras 2.10.0
+Data Pipelines	NumPy, Pillow (PIL), H5py
+Frontend Stack	HTML5, CSS3, JavaScript, Bootstrap 5
+📁 Repository Structure
+Plaintext
+btd-neuro-ai-detector/
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   ├── models/
+│   │   └── brain_tumor_vgg16_90acc.h5    # Trained model weights
+│   └── user_images/                      # Processed scan storage
+├── templates/
+│   ├── index.html                        # Portal & upload view
+│   └── prediction1.html                  # Diagnostic report view
+├── .gitignore
+├── app.py                                # Main Flask server & inference engine
+├── requirements.txt                      # Project dependencies
+└── README.md
+💻 Installation & Local Setup
+1. Clone the Repository
+Bash
+git clone https://github.com/shashank-gupta/btd-neuro-ai-detector.git
+cd btd-neuro-ai-detector
+2. Configure Virtual Environment
+Bash
+# Windows
+python -m venv .venv
+.venv\Scripts\activate
+
+# Linux / macOS
+python3 -m venv .venv
+source .venv/bin/activate
+3. Install Dependencies
+Bash
 pip install -r requirements.txt
-```
+4. Verify Model Location
+Ensure your trained weights file brain_tumor_vgg16_90acc.h5 is placed inside the static/models/ directory:
 
-### Step 4: Verify Installation
+Plaintext
+static/models/brain_tumor_vgg16_90acc.h5
+🚀 Running the Application
+Start the Flask development server:
 
-```bash
-python -c "import tensorflow; import flask; import cv2; print('All dependencies installed successfully!')"
-```
-
----
-
-## 🗂️ Dataset Setup
-
-### Download Dataset from Kaggle
-
-The application uses the **Brain Tumor Detection dataset** from Kaggle.
-
-**Dataset Link**: [Brain Tumor Detection Dataset](https://www.kaggle.com/datasets/ahmedhamada0/brain-tumor-detection)
-
-#### Steps to Download:
-
-1. **Create Kaggle Account**
-   - Visit [kaggle.com](https://www.kaggle.com)
-   - Sign up for a free account
-
-2. **Download Dataset**
-   - Go to the dataset link above
-   - Click "Download" button
-   - Extract the downloaded ZIP file
-
-3. **Dataset Information**
-   - **Total Images**: 7,000+ MRI scans
-   - **Image Format**: JPG, PNG
-   - **Image Size**: Typically 224x224 pixels
-   - **Classes**: No Tumor and Tumor
-   - **Split**: Training/Testing ratio
-
----
-
-## 🚀 Running the Application
-
-### Quick Start
-
-```bash
-# Make sure virtual environment is activated
-# On Windows: venv\Scripts\activate
-# On macOS/Linux: source venv/bin/activate
-
-# Run the Flask application
+Bash
 python app.py
-```
+Open your browser and navigate to:
 
-### Access the Web Interface
+Plaintext
+http://127.0.0.1:5000
+(To access from another device on the same local network, use http://<YOUR_LOCAL_IP>:5000)
 
-1. Open your web browser
-2. Navigate to: `http://localhost:5000`
-3. You should see the NeuroAI Detector homepage
+🖱️ Step-by-Step Usage
+Access Portal: Open the landing page and navigate to the Analysis section.
 
-### Running on Different Host/Port
+Enter Patient Information: Provide the patient's full name or hospital case ID.
 
-```bash
-# Run on specific port
-python app.py --port 8000
+Select Scan: Upload a supported brain MRI image (.jpg, .jpeg, .png).
 
-# Run on network (accessible from other machines)
-# Edit app.py and change: app.run(host='0.0.0.0', port=5000)
-```
+Initiate Scan Analysis: Click Analyze Image.
 
+Review Diagnostic Dashboard:
 
-## 🖱️ How to Use
+Overall diagnostic status: TUMOR DETECTED or NO TUMOR DETECTED.
 
-### Step 1: Access the Application
-- Open `http://localhost:5000` in your web browser
-- You'll see the NeuroAI Detector homepage
+Predicted pathological subtype (Glioma, Meningioma, Pituitary, or None).
 
-### Step 2: Navigate to Analysis
-- Click on "**Analyze**" in the navigation menu or "**Start Analysis**" button
-- Scroll to the upload section
+Exact confidence percentage for the selected class.
 
-### Step 3: Upload MRI Scan
-1. Enter the **Patient Name** (or test identifier)
-2. Select an MRI scan image file:
-   - Accepted formats: JPG, PNG
-   - Recommended size: 224x224 pixels
-   - Maximum file size: 10MB
-3. Click "**Analyze Image**"
+Class distribution breakdown across all 4 categories.
 
-### Step 4: View Results
-- The system will process the image
-- Results display includes:
-  - **Tumor Status**: "TUMOR DETECTED" or "NO TUMOR DETECTED"
-  - **AI Confidence**: Confidence level of prediction
-  - **Technical Metrics**: Model accuracy, parameters, processing time
-  - **Patient Information**: Name and analysis timestamp
-  - **Analyzed Image**: Display of processed MRI scan
+⚕️ Medical Disclaimer
+IMPORTANT CLINICAL NOTICE:
 
-### Step 5: Further Actions
-- **New Analysis**: Perform another analysis
-- **Print Results**: Print the results for medical records
-- **Medical Resources**: Access additional medical information
+This application is built as an academic research project and a technical proof-of-concept. It is not a certified software medical device (SaMD) and must not be used as a definitive diagnostic instrument. Final diagnostic determinations must always be confirmed by licensed radiologists, oncologists, and neurosurgeons using standard histological and clinical protocols.
 
----
+👨‍💻 Author
+Shashank Gupta
 
-## 🔧 Technical Details
+Department of Artificial Intelligence & Machine Learning
 
-### Technology Stack
+Noida Institute of Engineering and Technology (NIET)
 
-| Component | Technology |
-|-----------|-----------|
-| **Backend** | Flask 3.1.2 |
-| **Deep Learning** | TensorFlow 2.10.0, Keras 2.10.0 |
-| **Image Processing** | OpenCV 4.12.0, Pillow 11.3.0 |
-| **Frontend** | HTML5, CSS3, Bootstrap 5, JavaScript |
-| **Web Server** | Werkzeug 3.1.3 |
----
+GitHub: github.com/shashank-gupta
 
+LinkedIn: linkedin.com/in/shashank-gupta
 
-## ⚕️ Disclaimer
-
-**IMPORTANT MEDICAL NOTICE:**
-
-This AI analysis tool is designed to **assist medical professionals only** and should **NOT** be used as:
-- A replacement for professional medical diagnosis
-- Standalone clinical decision support
-- Medical treatment recommendation tool
-- Primary diagnostic tool
-
-**Always consult with qualified healthcare providers** for:
-- Proper diagnosis and interpretation
-- Treatment planning and decisions
-- Medical management of brain tumors
-
-**Early detection and professional medical care are crucial** for optimal patient outcomes. This tool is intended to supplement, not replace, professional medical judgment.
-
----
-
-## 📚 Resources
-
-### Medical Information
-- [Brain Tumor Diagnosis - Mayo Clinic](https://www.mayoclinic.org/diseases-conditions/brain-tumor/diagnosis-treatment/drc-20350088)
-- [Understanding Brain Tumors - Mayo Clinic](https://www.mayoclinic.org/diseases-conditions/brain-tumor/symptoms-causes/syc-20350084)
-- [MRI Technology for Brain Imaging](https://kidshealth.org/en/parents/mri-brain.html)
-- [Brain Tumor Treatment Options](https://www.cancer.net/cancer-types/brain-tumor/diagnosis)
-
-### Technical Resources
-- [CNN in Medical Imaging](https://www.analyticsvidhya.com/blog/2021/05/convolutional-neural-networks-cnn/)
-- [TensorFlow Documentation](https://www.tensorflow.org/)
-- [Keras Models](https://keras.io/models/)
-- [Flask Documentation](https://flask.palletsprojects.com/)
-
-### Dataset
-- [Kaggle Brain Tumor Dataset](https://www.kaggle.com/datasets/ahmedhamada0/brain-tumor-detection)
-
-### Source Code
-- [GitHub Repository](https://github.com/PrashantPKP/btd-neuro-ai-detector)
-
----
-
-## 👨‍💻 Author
-
-**Prashant Parshuramkar**
-
-- 🔗 [GitHub](https://github.com/PrashantPKP)
-- 💼 [LinkedIn](https://www.linkedin.com/in/prashantpkp/)
-- 🌐 [Portfolio](https://prashantparshuramkar.host20.uk/)
-
-Built with ❤️ for medical innovation and early disease detection
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to:
-- Report bugs
-- Suggest improvements
-- Submit pull requests
-- Fork the repository
-
-
----
-
-## 📞 Support
-
-For issues, questions, or suggestions:
-1. Check the troubleshooting section above
-2. Review the GitHub repository issues
-3. Contact the developer through GitHub
-
-
-
-
+📄 License
+This project is licensed under the MIT License — see the LICENSE file for full terms.
