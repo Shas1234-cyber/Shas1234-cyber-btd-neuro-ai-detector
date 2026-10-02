@@ -1,0 +1,2 @@
+# The trained model is larger than GitHub's 100 MB regular-file limit.
+static/models/*.h5 filter=lfs diff=lfs merge=lfs -text

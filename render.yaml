@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: btd-neuro-ai-detector
+    runtime: python
+    buildCommand: pip install -r render-requirements.txt
+    startCommand: gunicorn --workers 1 --threads 2 --timeout 180 app:app
+    autoDeploy: true
